@@ -13,7 +13,7 @@ def area_calc(num1, num2, num3):
     return area_total
 
 
-def surface_area(prompt):
+def num_validator(prompt):
     while True:
         try:
             value = float(input(prompt))
@@ -25,7 +25,22 @@ def surface_area(prompt):
             continue
         else:
             return value
-        
+
+
+def temperature(prompt):
+    while True:
+        try:
+            value = float(input(prompt))
+        except ValueError:
+            print("Sorry, I didn't understand that, please enter a numerical value.")
+            continue
+        if value <= 0:
+            temp = 20 + abs(value)
+            return temp
+        else:
+            temp = 20-value
+            return temp
+
         
 def insulation(prompt):
     u_value = [{'Name': '80mm PIR Panel', 'U_value': 0.26},
@@ -44,7 +59,7 @@ def insulation(prompt):
         except ValueError:
             print("Please select an option between 1 and 4.")
             continue
-        if panel not in range(1, 4):
+        if panel not in range(1, 5):
             print("Please enter an option between 1 and 4:")
             continue
         elif panel == 1:
@@ -53,18 +68,19 @@ def insulation(prompt):
             energy_rating = u_value[1]["U_value"]
         elif panel == 3:
             energy_rating = u_value[2]["U_value"]
-        else: 
-            energy_rating == u_value[3]["U_value"]
+        else:
+            panel == 4
+            energy_rating = u_value[3]["U_value"]
         return energy_rating
         break 
 
 
 start_program()
-wall_length = surface_area("Please enter length of coldroom in metres.:\n ")
-wall_width = surface_area("Please enter width of coldroom in metres.:\n ")
-wall_height = surface_area("Please enter internal height of coldroom in metres.:\n ")
+wall_length = num_validator("Please enter length of coldroom in metres.:\n ")
+wall_width = num_validator("Please enter width of coldroom in metres.:\n ")
+wall_height = num_validator("Please enter internal height of coldroom in metres.:\n ")
 room_area = area_calc(wall_length, wall_width, wall_height)
-print(room_area)
-energy_rating = insulation("Please select the size of the coldroom panel from options listed : ")
-print(energy_rating)
+energy_rating = insulation("Please select the size of the coldroom panel from options listed :\n ")
+room_temp = temperature("Please enter the target temperature on °C :\n ")
+
 
