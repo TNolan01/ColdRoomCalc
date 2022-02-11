@@ -3,7 +3,7 @@ def start_program():
     if user_name =='':
         print("Please enter your name to continue.\n")
     else:
-        print("Welcome to Coldroom Calculator {user_name}. Please input required data to calculate your refrigeration demand")
+        print(f"Welcome to Coldroom Calculator {user_name}. Please input required data to calculate your refrigeration demand")
 
 def area_calc(num1, num2, num3):
     wall_area = (num1*num2*num3)*4
@@ -27,27 +27,19 @@ def surface_area(prompt):
             return value
             break
 
-""" def insulation_spec():
-    print("A = 80mm PIR Insulated Panel. ")
-    print("B = 100mm PIR Insulated Panel.")
-    print("B = 150mm PIR Insulated Panel.")
-    print("C = 200mm PIR Insulated Panel.")
-    while True:
-        try:
-            data=input("Please pick thickness of insulated panels from A to D:")
-        except ValueError:
-                print("Invalid option")
-                continue      
-        if data.lower() =a:
-            u_value = 0.26
-        elif data.lower() =b:
-            u_value = 0.21
-        elif data.lower() =c:
-            u_value = 0.15
-        else data.lower(): =d:
-            u_value = 0.10
-    
-        return u_value  """
+def insulation():
+    u_value= [{'Name': '80mm PIR Panel', 'U_value': 0.26},
+                {'Name': '100mm PIR Panel', 'U_value': 0.21},
+                {'Name': '150mm PIR Panel', 'U_value': 0.15},
+                {'Name': '200mm PIR Panel', 'U_value': 0.10}
+    ]
+    print(f'1. {u_value[0]["Name"]}')
+    print(u_value[1]["Name"])
+    print(u_value[2]["Name"])
+    print(u_value[3]["Name"])
+
+
+
     
 
 start_program()
@@ -56,6 +48,7 @@ wall_width = surface_area("Please enter width of coldroom in metres.:\n ")
 wall_height = surface_area("Please enter internal height of coldroom in metres.:\n ")
 wall_area = area_calc(wall_length, wall_width, wall_height)
 print(wall_area)
+insulation()
 
 
 
