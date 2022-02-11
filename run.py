@@ -74,6 +74,26 @@ def insulation(prompt):
         return energy_rating
         break 
 
+def floor(prompt):
+    yes = {'yes','y', 'ye', ''}
+    no = {'no','n'}
+    
+    while True:
+        try:
+            value = input(prompt)
+        except ValueError:
+            print("Sorry, I didn't understand that, please enter yes or no.")
+            continue
+        if value in yes:
+            value = 0.28
+            return value
+        elif value in no:
+            value = 1.0
+            return value
+        else:
+            print("Please respond with 'yes' or 'no'")
+    
+
 
 start_program()
 wall_length = num_validator("Please enter length of coldroom in metres.:\n ")
@@ -82,5 +102,6 @@ wall_height = num_validator("Please enter internal height of coldroom in metres.
 room_area = area_calc(wall_length, wall_width, wall_height)
 energy_rating = insulation("Please select the size of the coldroom panel from options listed :\n ")
 room_temp = temperature("Please enter the target temperature on °C :\n ")
-
+flooring = floor("Is the floor insulated ? yes or no :\n")
+print(flooring)
 
