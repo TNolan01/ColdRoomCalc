@@ -112,13 +112,23 @@ def other_heat_load(prompt):
             print("Sorry, I didn't understand that, please enter yes or no.")
             continue
         if value in yes:
-            heat = input("Please enter estimate number of people working in the room :/n")
-            num_validator(heat)
-            value = 1000.00
-            return value
+            while True:
+                try:
+                    value = int(input("How many people are working in this room?\n"))
+                except ValueError:
+                    print("Please enter a numerical value for people.\n")
+                    continue
+                if value < 0:
+                    print("Your input must be a whole number.")
+                    continue
+                else:
+                    heat_calc = (value * 6 * 270)/1000
+                    return heat_calc
+                    break
         elif value in no:
-            value = 0.0
-            return value
+            heat = 1.0
+            return heat
+            break
         else:
             print("Please respond with 'yes' or 'no'")
 
@@ -140,7 +150,8 @@ room_temp = temperature("Please enter the target temperature on °C :\n ")
 flooring = floor("Is the floor insulated ? yes or no :\n")
 product_qty = num_validator("Please enter quantity of product in Kg :\n")
 prod_heat_load(product_qty)
-other_heat_load("Are there any people working in this room ? yes or no :\n")
-print(other_heat_load(product_qty))
+people = other_heat_load("Are there any people working in this room ? yes or no :\n")
+print(people)
+
 
 
