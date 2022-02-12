@@ -1,9 +1,11 @@
 def start_program():
+    print("Coldroom Duty Calculator")
     project_ref = input("Please enter your project name or reference: \n")
     if project_ref == '':
-        print("Please enter your name to continue.\n") 
+        print("Please enter a reference name or number to continue.\n") 
     else:
-        print(f"Welcome to Coldroom Calculator. Please input required data to calculate your refrigeration demand for {project_ref}")
+        print(f"Welcome to Coldroom Calculator for your project - {project_ref}.\n") 
+        print("Please input the required data to calculate your refrigeration power demand") 
 
 
 def area_calc(num1, num2, num3):
@@ -75,8 +77,8 @@ def insulation(prompt):
         break 
 
 def floor(prompt):
-    yes = {'yes','y', 'ye', ''}
-    no = {'no','n'}
+    yes = {'yes' ,'y' , 'ye' , ''}
+    no = {'no' ,'n'}
     
     while True:
         try:
@@ -92,7 +94,40 @@ def floor(prompt):
             return value
         else:
             print("Please respond with 'yes' or 'no'")
+
+
+def prod_heat_load(product_qty):
+    heat_load = (product_qty * 1.9)/3600
+    return heat_load
+
+
+def other_heat_load(prompt):
+    yes = {'yes' ,'y' , 'ye' , ''}
+    no = {'no' ,'n'}
     
+    while True:
+        try:
+            value = input(prompt)
+        except ValueError:
+            print("Sorry, I didn't understand that, please enter yes or no.")
+            continue
+        if value in yes:
+            heat = input("Please enter estimate number of people working in the room :/n")
+            num_validator(heat)
+            value = 1000.00
+            return value
+        elif value in no:
+            value = 0.0
+            return value
+        else:
+            print("Please respond with 'yes' or 'no'")
+
+
+
+
+
+
+
 
 
 start_program()
@@ -103,5 +138,9 @@ room_area = area_calc(wall_length, wall_width, wall_height)
 energy_rating = insulation("Please select the size of the coldroom panel from options listed :\n ")
 room_temp = temperature("Please enter the target temperature on °C :\n ")
 flooring = floor("Is the floor insulated ? yes or no :\n")
-print(flooring)
+product_qty = num_validator("Please enter quantity of product in Kg :\n")
+prod_heat_load(product_qty)
+other_heat_load("Are there any people working in this room ? yes or no :\n")
+print(other_heat_load(product_qty))
+
 
