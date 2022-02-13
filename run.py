@@ -25,11 +25,7 @@ def start_program():
         print_with_color("Please input the required data to calculate your refrigeration power demand", color=Fore.BLUE, brightness=Style.BRIGHT) 
 
 
-def area_calc(num1, num2, num3):
-    wall_area = (num1*num2*num3)*4
-    roof_area = (num1*num2)
-    area_total = wall_area + roof_area
-    return area_total
+
 
 
 def num_validator(prompt):
@@ -113,10 +109,6 @@ def floor(prompt):
             print_with_color("Please respond with 'yes' or 'no'", color=Fore.RED, brightness=Style.BRIGHT)
 
 
-def prod_heat_load(product_qty):
-    heat_load = (product_qty * 1.9)/3600
-    return heat_load
-
 
 def other_heat_load(prompt):
     yes = {'yes' ,'y' , 'ye' , ''}
@@ -150,25 +142,41 @@ def other_heat_load(prompt):
             print_with_color("Please respond with 'yes' or 'no'", color=Fore.RED, brightness=Style.BRIGHT)
 
 
+def transmission_load_kw(num1, num2, num3, num4, num5):
+    wall_area = (num1*num2*num3)*4
+    roof_area = (num1*num2)
+    area_total = wall_area + roof_area
+    load_1 = (num4 * area_total * num5 * 24) /1000
+    return load_1
 
 
+def floor_load_kw(num1, num2, num3, num4):
+    floor_area = num1 * num2
+    load_2 = (num3 * floor_area * num4 * 24) /1000
+    return load_2
 
 
-
-
+def product_load_kw(num1, num2, num3):
+    temp = 20-num3
+    load_3 = ((num1 * 1.9)/3600) + (num1 * (num2-temp)/3600)
+    return load_3
 
 start_program()
 wall_length = num_validator("Please enter length of coldroom in metres.:\n ")
 wall_width = num_validator("Please enter width of coldroom in metres.:\n ")
 wall_height = num_validator("Please enter internal height of coldroom in metres.:\n ")
-room_area = area_calc(wall_length, wall_width, wall_height)
 energy_rating = insulation("Please select the size of the coldroom panel from options listed :\n ")
-room_temp = temperature("Please enter the target temperature on °C :\n ")
-flooring = floor("Is the floor insulated ? yes or no :\n")
-product_qty = num_validator("Please enter quantity of product in Kg :\n")
-prod_heat_load(product_qty)
-people = other_heat_load("Are there any people working in this room ? yes or no :\n")
-print(people)
-
-
+room_temp = temperature("Please enter the target temperature, in °C. :\n ")
+flooring = floor("Is the floor insulated ? yes or no :\n ")
+product_qty = num_validator("Please enter quantity of product in Kg. :\n ")
+product_in_temp = num_validator("Please enter the temperature of product going into room, in °C :\n ")
+people = other_heat_load("Are there any people working in this room ? yes or no :\n ")
+air_changes = num_validator("Please enter an approximate number of door openings in 24hour period.:\n ")
+load_1 = transmission_load_kw(wall_length, wall_width, wall_height, energy_rating, room_temp)
+load_2 = floor_load_kw(wall_length, wall_width, flooring, room_temp)
+load_3 = product_load_kw(product_qty, product_in_temp, room_temp)
+print(load_3)
+print(product_qty)
+print(product_in_temp)
+print(room_temp)
 
