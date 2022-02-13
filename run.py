@@ -1,11 +1,28 @@
+from colorama import init, Fore, Back, Style
+
+init()
+# all available foreground colors
+FORES = [ Fore.BLACK, Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE ]
+# all available background colors
+BACKS = [ Back.BLACK, Back.RED, Back.GREEN, Back.YELLOW, Back.BLUE, Back.MAGENTA, Back.CYAN, Back.WHITE ]
+# brightness values
+BRIGHTNESS = [ Style.DIM, Style.NORMAL, Style.BRIGHT ]
+
+
+def print_with_color(s, color=Fore.WHITE, brightness=Style.NORMAL, **kwargs):
+    """Utility function wrapping the regular `print()` function 
+    but with colors and brightness"""
+    print(f"{brightness}{color}{s}{Style.RESET_ALL}", **kwargs)
+
+
 def start_program():
-    print("Coldroom Duty Calculator")
+    print_with_color("Coldroom Duty Calculator", color=Fore.BLUE, brightness=Style.BRIGHT)
     project_ref = input("Please enter your project name or reference: \n")
     if project_ref == '':
-        print("Please enter a reference name or number to continue.\n") 
+        print_with_color("Please enter a reference name or number to continue.\n", color=Fore.RED, brightness=Style.BRIGHT) 
     else:
-        print(f"Welcome to Coldroom Calculator for your project - {project_ref}.\n") 
-        print("Please input the required data to calculate your refrigeration power demand") 
+        print_with_color(f"Welcome to Coldroom Calculator for your project - {project_ref}.\n", color=Fore.BLUE, brightness=Style.BRIGHT ) 
+        print_with_color("Please input the required data to calculate your refrigeration power demand", color=Fore.BLUE, brightness=Style.BRIGHT) 
 
 
 def area_calc(num1, num2, num3):
@@ -20,10 +37,10 @@ def num_validator(prompt):
         try:
             value = float(input(prompt))
         except ValueError:
-            print("Sorry, I didn't understand that, please enter a numerical value.")
+            print_with_color("Sorry, I didn't understand that, please enter a numerical value.", color=Fore.RED, brightness=Style.BRIGHT)
             continue
         if value < 0:
-            print("Sorry, your response must not be negative.")
+            print_with_color("Sorry, your response must not be negative.", color=Fore.RED, brightness=Style.BRIGHT )
             continue
         else:
             return value
@@ -34,7 +51,7 @@ def temperature(prompt):
         try:
             value = float(input(prompt))
         except ValueError:
-            print("Sorry, I didn't understand that, please enter a numerical value.")
+            print_with_color("Sorry, I didn't understand that, please enter a numerical value.", color=Fore.RED, brightness=Style.BRIGHT)
             continue
         if value <= 0:
             temp = 20 + abs(value)
@@ -59,10 +76,10 @@ def insulation(prompt):
         try:
             panel = int(input(prompt))
         except ValueError:
-            print("Please select an option between 1 and 4.")
+            print_with_color("Please select an option between 1 and 4.", color=Fore.BLUE, brightness=Style.BRIGHT)
             continue
         if panel not in range(1, 5):
-            print("Please enter an option between 1 and 4:")
+            print_with_color("Please enter an option between 1 and 4:", color=Fore.RED, brightness=Style.BRIGHT)
             continue
         elif panel == 1:
             energy_rating = u_value[0]["U_value"]
@@ -84,7 +101,7 @@ def floor(prompt):
         try:
             value = input(prompt)
         except ValueError:
-            print("Sorry, I didn't understand that, please enter yes or no.")
+            print_with_color("Sorry, I didn't understand that, please enter yes or no.", color=Fore.RED, brightness=Style.BRIGHT)
             continue
         if value in yes:
             value = 0.28
@@ -93,7 +110,7 @@ def floor(prompt):
             value = 1.0
             return value
         else:
-            print("Please respond with 'yes' or 'no'")
+            print_with_color("Please respond with 'yes' or 'no'", color=Fore.RED, brightness=Style.BRIGHT)
 
 
 def prod_heat_load(product_qty):
@@ -109,17 +126,17 @@ def other_heat_load(prompt):
         try:
             value = input(prompt)
         except ValueError:
-            print("Sorry, I didn't understand that, please enter yes or no.")
+            print_with_color("Sorry, I didn't understand that, please enter yes or no.", color=Fore.RED, brightness=Style.BRIGHT)
             continue
         if value in yes:
             while True:
                 try:
                     value = int(input("How many people are working in this room?\n"))
                 except ValueError:
-                    print("Please enter a numerical value for people.\n")
+                    print_with_color("Please enter a numerical value for people.\n", color=Fore.RED, brightness=Style.BRIGHT)
                     continue
                 if value < 0:
-                    print("Your input must be a whole number.")
+                    print_with_color("Your input must be a whole number.", color=Fore.RED, brightness=Style.BRIGHT)
                     continue
                 else:
                     heat_calc = (value * 6 * 270)/1000
@@ -130,7 +147,7 @@ def other_heat_load(prompt):
             return heat
             break
         else:
-            print("Please respond with 'yes' or 'no'")
+            print_with_color("Please respond with 'yes' or 'no'", color=Fore.RED, brightness=Style.BRIGHT)
 
 
 
