@@ -123,9 +123,9 @@ def other_heat_load(prompt):
         if value in yes:
             while True:
                 try:
-                    value = int(input("How many people are working in this room?\n"))
+                    value = int(input("How many people are working in this room?\n "))
                 except ValueError:
-                    print_with_color("Please enter a numerical value for people.\n", color=Fore.RED, brightness=Style.BRIGHT)
+                    print_with_color("Please enter a numerical value for people.\n ", color=Fore.RED, brightness=Style.BRIGHT)
                     continue
                 if value < 0:
                     print_with_color("Your input must be a whole number.", color=Fore.RED, brightness=Style.BRIGHT)
@@ -161,6 +161,23 @@ def product_load_kw(num1, num2, num3):
     load_3 = ((num1 * 1.9)/3600) + (num1 * (num2-temp)/3600)
     return load_3
 
+
+def people_load_kw(num1):
+    load_4 = (num1 * 6 * 270)/1000
+    return load_4
+
+
+def infiltration_kw(num1, num2, num3, num4, num5):
+    volume = num2 * num3 * num4
+    load_5 = (num1 * volume * 2 *(20 - num5))/3600
+    return load_5
+
+
+def duty_calc(num1, num2, num3, num4, num5):
+    total_duty = ((num1 + num2 + num3 + num4 + num5) * 1.2) / 14
+    return total_duty
+
+
 start_program()
 wall_length = num_validator("Please enter length of coldroom in metres.:\n ")
 wall_width = num_validator("Please enter width of coldroom in metres.:\n ")
@@ -175,8 +192,9 @@ air_changes = num_validator("Please enter an approximate number of door openings
 load_1 = transmission_load_kw(wall_length, wall_width, wall_height, energy_rating, room_temp)
 load_2 = floor_load_kw(wall_length, wall_width, flooring, room_temp)
 load_3 = product_load_kw(product_qty, product_in_temp, room_temp)
-print(load_3)
-print(product_qty)
-print(product_in_temp)
-print(room_temp)
+load_4 = people_load_kw(people)
+load_5 = infiltration_kw(air_changes, wall_height, wall_length, wall_width, room_temp)
+total_duty = duty_calc(load_1, load_2, load_3, load_4, load_5)
+print(total_duty)
+
 
