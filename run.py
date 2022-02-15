@@ -1,6 +1,23 @@
+import gspread
+from google.oauth2.service_account import Credentials
+
+
 from colorama import init, Fore, Back, Style
 
+SCOPE = [
+    "https://www.googleapis.com/auth/spreadsheets",
+    "https://www.googleapis.com/auth/drive.file",
+    "https://www.googleapis.com/auth/drive"
+]
 
+CREDS = Credentials.from_service_account_file('creds.json')
+SCOPED_CREDS = CREDS.with_scopes(SCOPE)
+GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
+SHEET = GSPREAD_CLIENT.open('calc_data')
+
+room = SHEET.worksheet('room')
+
+data = room.get_all_values()
 
 init()
 # all available foreground colors
@@ -195,6 +212,6 @@ load_4 = people_load_kw(people)
 load_5 = infiltration_kw(air_changes, wall_height, wall_length, wall_width, room_temp)
 total_duty = duty_calc(load_1, load_2, load_3, load_4, load_5)
 print(total_duty)
-
+print(data)
 
 
