@@ -25,9 +25,6 @@ def start_program():
         print_with_color("Please input the required data to calculate your refrigeration power demand", color=Fore.BLUE, brightness=Style.BRIGHT) 
 
 
-
-
-
 def num_validator(prompt):
     while True:
         try:
@@ -89,6 +86,7 @@ def insulation(prompt):
         return energy_rating
         break 
 
+
 def floor(prompt):
     yes = {'yes' ,'y' , 'ye' , ''}
     no = {'no' ,'n'}
@@ -109,10 +107,9 @@ def floor(prompt):
             print_with_color("Please respond with 'yes' or 'no'", color=Fore.RED, brightness=Style.BRIGHT)
 
 
-
 def other_heat_load(prompt):
-    yes = {'yes' ,'y' , 'ye' , ''}
-    no = {'no' ,'n'}
+    yes = {'yes','y', 'ye', ''}
+    no = {'no','n'}
     
     while True:
         try:
@@ -146,13 +143,13 @@ def transmission_load_kw(num1, num2, num3, num4, num5):
     wall_area = (num1*num2*num3)*4
     roof_area = (num1*num2)
     area_total = wall_area + roof_area
-    load_1 = (num4 * area_total * num5 * 24) /1000
+    load_1 = (num4 * area_total * num5 * 24) / 1000
     return load_1
 
 
 def floor_load_kw(num1, num2, num3, num4):
     floor_area = num1 * num2
-    load_2 = (num3 * floor_area * num4 * 24) /1000
+    load_2 = (num3 * floor_area * num4 * 24) / 1000
     return load_2
 
 
@@ -169,7 +166,7 @@ def people_load_kw(num1):
 
 def infiltration_kw(num1, num2, num3, num4, num5):
     volume = num2 * num3 * num4
-    load_5 = (num1 * volume * 2 *(20 - num5))/3600
+    load_5 = (num1 * volume * 2 * (20 - num5))/3600
     return load_5
 
 
