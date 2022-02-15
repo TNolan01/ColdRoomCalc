@@ -1,5 +1,7 @@
 from colorama import init, Fore, Back, Style
 
+
+
 init()
 # all available foreground colors
 FORES = [ Fore.BLACK, Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE ]
@@ -172,7 +174,7 @@ def infiltration_kw(num1, num2, num3, num4, num5):
 
 def duty_calc(num1, num2, num3, num4, num5):
     total_duty = ((num1 + num2 + num3 + num4 + num5) * 1.2) / 14
-    return total_duty
+    return round(total_duty, 2)
 
 
 start_program()
@@ -193,5 +195,6 @@ load_4 = people_load_kw(people)
 load_5 = infiltration_kw(air_changes, wall_height, wall_length, wall_width, room_temp)
 total_duty = duty_calc(load_1, load_2, load_3, load_4, load_5)
 print(total_duty)
+
 
 
