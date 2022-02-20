@@ -2,7 +2,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 
-from colorama import init, Fore, Back, Style
+from colorama import init, Fore, Style
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -17,15 +17,17 @@ SHEET = GSPREAD_CLIENT.open('calc_data')
 
 room = SHEET.worksheet('room')
 
-data = room.get_all_values()
-
 init()
 # all available foreground colors
 FORES = [ Fore.BLACK, Fore.RED, Fore.GREEN, Fore.YELLOW, Fore.BLUE, Fore.MAGENTA, Fore.CYAN, Fore.WHITE ]
-# all available background colors
-BACKS = [ Back.BLACK, Back.RED, Back.GREEN, Back.YELLOW, Back.BLUE, Back.MAGENTA, Back.CYAN, Back.WHITE ]
-# brightness values
+# brightness levels
 BRIGHTNESS = [ Style.DIM, Style.NORMAL, Style.BRIGHT ]
+
+
+def update_room_worksheet(val1, data):
+    room_worksheet = room
+    room_worksheet.update_cell(val1, val2, data)
+
 
 
 def print_with_color(s, color=Fore.WHITE, brightness=Style.NORMAL, **kwargs):
@@ -194,8 +196,10 @@ def duty_calc(num1, num2, num3, num4, num5):
     return round(total_duty, 2)
 
 
+
 start_program()
 wall_length = num_validator("Please enter length of coldroom in metres.:\n ")
+room.update_cell(2,2, wall_length)
 wall_width = num_validator("Please enter width of coldroom in metres.:\n ")
 wall_height = num_validator("Please enter internal height of coldroom in metres.:\n ")
 energy_rating = insulation("Please select the size of the coldroom panel from options listed :\n ")
@@ -212,6 +216,3 @@ load_4 = people_load_kw(people)
 load_5 = infiltration_kw(air_changes, wall_height, wall_length, wall_width, room_temp)
 total_duty = duty_calc(load_1, load_2, load_3, load_4, load_5)
 print(total_duty)
-print(data)
-
-

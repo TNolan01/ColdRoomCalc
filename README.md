@@ -23,6 +23,7 @@
 ### Project Design:
 <p>The project is a command line based program run running in a compact terminal window. As the program is designed to be functional and practical.
 I have used colorama to add some color changes to the text.</p>
+<p>In instances where the user has entered and invalid input the text which prompts them to enter a value of the correct type or inside the correct is red in color.</p>
 
 
 ### Project Structure:
